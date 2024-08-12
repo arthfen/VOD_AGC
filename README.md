@@ -12,14 +12,14 @@ cd final-high-step1/disag.v8
 R CMD INSTALL .
 ```
 
-2. To run the model, you must run the scripts of *final-high-step1* in order.
-A job script *0job.sh* is an example of how the model was ran in the LSCE's cluster Obelix.
-In that case, you could submit the job as:
+2. To run the model, you must run the scripts of *final-high-step1* in order, starting by *0call.R*.
+
+A job script *0job.sh* is an example of how the model was ran in the LSCE's cluster Obelix. In that case, you could submit the job as:
 ```sh
 cd final-high-step1
 qsub 0job.sh
 ```
-If the file *0job.sh* is used, then the variance estimatino (i.e., folder *final-high-step4*) will follow automatically.
+If the file *0job.sh* is used, then the variance estimation (i.e., folder *final-high-step4*) will follow automatically.
 
 ## Important remarks
 The corresponding Zenodo repositories contains files 3out_mean_{year}.tif and 3out_sd_{year}.tif.
