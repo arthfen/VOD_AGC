@@ -1,0 +1,11 @@
+Package: disag.v8
+Type: Package
+Title: DisaggregationModel_v8
+Version: 1.0
+Date: 2023-10-20
+Author: Arthur N Fendrich
+Maintainer: Arthur N Fendrich <arthur.fendrich@lsce.ipsl.fr>
+Description: This is a version of the disaggregation model, tailored for Amazon aboveground carbon.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.10), RcppArmadillo
+LinkingTo: Rcpp, RcppArmadillo
