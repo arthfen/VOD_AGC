@@ -31,7 +31,7 @@ Instead, they were obtained as follows:
 2. For each pixel, the model matrix multiplied these samples and the mean μ, and standard deviation, σ, were calculated.
 3. File 3out_mean_{year}.tif corresponds to exp(μ), and file 3out_sd_{year}.tif, to σ.
 
-Therefore, the expected value (i.e., the expected AGC in MgC/ha) in each pixel follows a [log-normal distribution]([https://twitter.com/your_username](https://en.wikipedia.org/wiki/Log-normal_distribution)) with parameters μ and σ.
+Therefore, the expected value (i.e., the expected AGC in MgC/ha) in each pixel follows a [log-normal distribution](https://en.wikipedia.org/wiki/Log-normal_distribution) with parameters μ and σ.
 The file 3out_mean_{year}.tif, used for calculations in the paper, correspond to the median of such a distribution, but the uncertainty is also provided in case users are interested in other quantities (i.e., confidence intervals, for example).
 
 An example is provided below:
