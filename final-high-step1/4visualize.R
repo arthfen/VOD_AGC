@@ -1,8 +1,6 @@
 ################### Script: 4visualize.R ##################################
 
 ## In this script, we generate the curves extracted by the estimation procedure
-### I didn't add almost any detailed comments because it basically replicates the same ideas described before
-#### Exception: lines 77-89
 
 rm(list=ls())
 library(raster)
@@ -41,6 +39,7 @@ R=mtcs[[2]]
 r=mtcs[[3]]
 N=mtcs[[4]]
 
+## Matrix V below is the variance-covariance matrix estimated, it is used later in L.128
 rho <- exp(st)
 Sl <- rho[2]*S1 + rho[3]*S2 + rho[4]*S3 + rho[5]*S4 + rho[6]*S5 + rho[7]*S6 + rho[8]*S7 + rho[9]*S8 + rho[10]*S9
 V <- crossprod(R)/rho[1] + Sl
@@ -49,7 +48,7 @@ sqrtinv <- sqrt(1/eigenV$values)
 hat.cov <- crossprod(sqrtinv * t(eigenV$vectors))
 hat.beta <- b0
 
-# generate a fake model matrix
+## We start to generate a fake model matrix, so we can evaluate our smoothers
 cci <- raster('../large_domain_allpixels/input/1CCI_biomass_2010.tif'); cci = sampleRegular(cci, 1e5, asRaster = TRUE, useGDAL = TRUE)
 tem <- raster('../large_domain_allpixels/input/1Tmax_2010.tif'); tem = sampleRegular(tem, 1e5, asRaster = TRUE, useGDAL = TRUE)
 mcw <- raster('../large_domain_allpixels/input/1MCWD_2010.tif'); mcw = sampleRegular(mcw, 1e5, asRaster = TRUE, useGDAL = TRUE)
