@@ -33,3 +33,31 @@ Instead, they were obtained as follows:
 
 Therefore, the expected value (i.e., the expected AGC in MgC/ha) in each pixel follows a [log-normal distribution]([https://twitter.com/your_username](https://en.wikipedia.org/wiki/Log-normal_distribution)) with parameters μ and σ.
 The file 3out_mean_{year}.tif, used for calculations in the paper, correspond to the median of such a distribution, but the uncertainty is also provided in case users are interested in other quantities (i.e., confidence intervals, for example).
+
+An example is provided below:
+```r
+## Loads the library and the maps for 2010
+library(terra)
+mu = rast('final-high-step1/output/YEX_v4/3out_mean_2010.tif')
+si = rast('final-high-step1/output/YEX_v4/3out_sd_2010.tif')
+
+## Samples a random cell in the landscape and extracts mu and sigma
+set.seed(1234)
+cl = sample(ncell(mu), 1)
+si.cl = as.numeric(si[cl]) # The sigma estimate
+expmu.cl = as.numeric(mu[cl]) # The exp(mu) estimate
+mu.cl = log(expmu.cl)
+
+## Now, the quantities we derive some information for the expected AGC value:
+## We can either use R's builtin functions (e.g., qlnorm) or write the formulas ourselves from:
+### https://en.wikipedia.org/wiki/Log-normal_distribution
+
+print(qlnorm(p = 0.5, meanlog = mu.cl, sdlog = si.cl)) # Median
+# [1] 56.43099 # Notice that this equals 'expmu.cl'
+
+print((exp(si.cl^2) - 1) * exp(2*mu.cl + si.cl^2)) # Variance 
+# [1] 2.355712
+
+print(qlnorm(p = c(0.005, 0.995), meanlog = mu.cl, sdlog = si.cl)) # 99% confidence interval
+# [1] 52.61488 60.52389
+```
