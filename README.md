@@ -22,7 +22,7 @@ qsub 0job.sh
 If the file *0job.sh* is used, then the variance estimation (i.e., folder *final-high-step4*) will follow automatically.
 
 ## Important remarks
-The corresponding Zenodo repositories contains files 3out_mean_{year}.tif and 3out_sd_{year}.tif.
+The corresponding OSF repositories contains files 3out_mean_{year}.tif and 3out_sd_{year}.tif.
 
 **These files should not be interpreted the mean and standard deviation of the model predictions**.
 
