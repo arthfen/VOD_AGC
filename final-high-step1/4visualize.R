@@ -132,7 +132,7 @@ rm(tmpgam.X1, tmpgam.X2, tmpgam.X3, tmpgam.X4, tmpgam.age)
 set.seed(1)
 Cv <- chol(hat.cov, pivot = TRUE)
 Cv <- Cv[,order(attr(Cv, 'pivot'))]
-n.rep = 2500
+n.rep = 1000
 nb <- dim(hat.cov)[1]
 br <- t(Cv) %*% matrix(rnorm(n.rep*nb),nb,n.rep)
 br <- as.numeric(hat.beta) + br
@@ -238,10 +238,10 @@ out.sd <- apply(out, 1, sd)
 om <- out.mean[order(tmp$x7)]
 os <- out.sd[order(tmp$x7)]
 d <- tmp$x7[order(tmp$x7)]
-pdf(paste0('s5-Age.pdf'))
+pdf(paste0('s5-Age-undisturbed.pdf'))
 plot(om ~ d, type = 'l', cex = 1.5,
 	ylim = c(min(om - os)*1, max(om + os)*1),
-	xlim = c(min(d), max(d)), main = 's(x7) Estimated - Age 1',
+	xlim = c(min(d), max(d)), main = 's(x5) Estimated - Age 1',
 	xlab = 'age 1',
 	ylab = 's(age)')
 polygon(c(d, rev(d)), c(om - os, rev(om + os)), col = rgb(80, 80, 80, 50, maxColorValue = 255), border = NA)
@@ -278,7 +278,7 @@ out.sd <- apply(out, 1, sd)
 om <- out.mean[order(tmp$x7)]
 os <- out.sd[order(tmp$x7)]
 d <- tmp$x7[order(tmp$x7)]
-pdf(paste0('s6-Age.pdf'))
+pdf(paste0('s7-Age-regrowth.pdf'))
 plot(om ~ d, type = 'l', cex = 1.5,
 	ylim = c(min(om - os)*1, max(om + os)*1),
 	xlim = c(min(d), max(d)), main = 's(x7) Estimated - Age 1',
@@ -318,10 +318,10 @@ out.sd <- apply(out, 1, sd)
 om <- out.mean[order(tmp$x7)]
 os <- out.sd[order(tmp$x7)]
 d <- tmp$x7[order(tmp$x7)]
-pdf(paste0('s7-Age.pdf'))
+pdf(paste0('s6-Age-degraded.pdf'))
 plot(om ~ d, type = 'l', cex = 1.5,
 	ylim = c(min(om - os)*1, max(om + os)*1),
-	xlim = c(min(d), max(d)), main = 's(x7) Estimated - Age 1',
+	xlim = c(min(d), max(d)), main = 's(x6) Estimated - Age 1',
 	xlab = 'age 1',
 	ylab = 's(age)')
 polygon(c(d, rev(d)), c(om - os, rev(om + os)), col = rgb(80, 80, 80, 50, maxColorValue = 255), border = NA)

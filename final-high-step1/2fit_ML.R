@@ -14,11 +14,6 @@ library(numDeriv)
 #####################################################
 ## In step 1, we define some necessary functions and loads the coarse variable
 
-## If we had a previous iteration for the variance parameter, then we load it to incorporate in our likelihood function
-if(file.exists('../final-high-step4/output/1mtcs_sol-var.rds')){
-	ll.t2 <- as.numeric(readRDS('../final-high-step4/output/1mtcs_sol-var.rds')[[1]])
-}
-
 ## We define the number of rows and blocks that we will split our processing
 nr <- nrow(rast('../large_domain_allpixels/input/1blocks_high.tif'))
 blks <- 4000
@@ -222,15 +217,17 @@ ag.m <- function(i, b){
 	mcwd <- do.call(rbind, mcwd)
 	
 	## The pixels that are not in MapBiomas are removed, as well as those NA pixels in TMF
-	tmp[tmp[,'map'] == 0 | tmp[,'tmf'] %in% c(0, 8), 'block'] <- NA
+	s0 <- data.frame(s0 = 0, block = tmp[,'block'])
+	nak <- which(tmp[,'map'] == 0 | tmp[,'tmf'] %in% c(0, 8))
+	if(length(nak) > 0) tmp[nak, 'block'] <- NA
 	na <- getRowIndex_NA(as.matrix(cbind(tmp, tmax, mcwd)))
 	if(length(na) == nrow(tmp)) return(list(NULL, NULL, NULL, NULL, NULL))
 
 	## This part is a little bit tricky. The coarse-level average is calculated based on the AGC of forest pixels + non-forest pixels
 	### Since we assume that AGC(non-forest) = 0, we have to count how many non-forest pixels we have in order to add to the calculation
 	### I call this "extra zeros", reliable pixels that are removed from the model, but not from the average calculation
-	s0 <- data.frame(s0 = 0, block = tmp[,'block'])
-	s0[which(tmp[,'tmf'] %in% c(0, 8)), 1] <- 1
+	nak <- which(tmp[,'tmf'] %in% c(0, 8))
+	if(length(nak) > 0) s0[nak, 1] <- 1
 	s0 <- na.omit(s0)
 	s0 <- cbind(sort(unique(s0[,2])), rowsum(s0[,1], group = s0[,2]))
 	s0 <- s0[which(s0[,2] > 0),]
